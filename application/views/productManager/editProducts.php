@@ -80,18 +80,7 @@ $this->load->view('layout/topmenu');
 
 
                     </div>
-                    <?php
-                    if ($product_obj->variant_product_of) {
-                        ?>
-                        <!--end of price-->
-                        <div class="form-group">
-                            <label >Variant Value</label>
-                            <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->variant_value; ?>">
-                        </div>
-                        <?php
-                    }
-                    ?>
-
+     
                 
                         <div class="form-group">
                             <label >Variant Value: <?php echo $product_obj->variant_value; ?></label>
