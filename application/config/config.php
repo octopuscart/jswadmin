@@ -25,10 +25,10 @@ $islocal = false;
 
 if (strpos($baselink, '192.168')) {
     $islocal = true;
-    $baselinkmain = 'http://' . $baselinkurl . '/octopusadmin';
+    $baselinkmain = 'http://' . $baselinkurl . '/jswadmin';
 } elseif (strpos($baselink, 'localhost')) {
     $islocal = true;
-    $baselinkmain = 'http://' . $baselinkurl . '/octopusadmin';
+    $baselinkmain = 'http://' . $baselinkurl . '/jswadmin';
 } else {
     $baselinkmain = 'https://' . $baselinkurl . '/';
 }

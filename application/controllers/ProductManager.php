@@ -321,6 +321,7 @@ class ProductManager extends CI_Controller {
                 'file_name' => $file_newname,
                 'offer' => $this->input->post('offer'),
                 'video_link' => $this->input->post('video_link'),
+                'variant_value' => $this->input->post("variant_value"),
                 'file_name1' => "",
                 'file_name2' => "",
                 'status' => 1,
@@ -367,8 +368,15 @@ class ProductManager extends CI_Controller {
         $productobj = $query->row();
 
 
+
+
         if ($productobj) {
             $data['product_obj'] = $productobj;
+            $this->db->where('variant_product_of', $product_id);
+            $query = $this->db->get('products');
+            $vrproductobj = $query->result_array();
+
+            $data['vrproductobj'] = $vrproductobj;
         } else {
             redirect('ProductManager/productReport');
         }
@@ -492,6 +500,7 @@ class ProductManager extends CI_Controller {
                 'price' => $this->input->post('price'),
                 'offer' => $this->input->post('offer'),
                 'video_link' => $this->input->post('video_link'),
+                'variant_value' => $this->input->post("variant_value"),
                 'status' => 1,
                 'stock_status' => $this->input->post('stock_status')
             );
@@ -532,6 +541,25 @@ class ProductManager extends CI_Controller {
             //$last_id = $this->db->insert_id();
             redirect('ProductManager/edit_product/' . $product_id);
         }
+
+        if (isset($_POST["addvariant"])) {
+            $variant_value = $this->input->post("variant_value");
+            $this->db->where('id', $product_id);
+            $query = $this->db->get('products');
+            $productobj = $query->row_array();
+            unset($productobj["id"]);
+            $productobj["variant_value"] = $variant_value;
+            $this->db->insert('products', $productobj);
+            $last_id = $this->db->insert_id();
+            if (autosku) {
+                $sku = SKU_PREFIX . $productobj['sku'] . "/" . $last_id;
+                $this->db->set('sku', $sku);
+                $this->db->where('id', $last_id); //set column_name and value in which row need to update
+                $this->db->update('products'); //
+            }
+            redirect('ProductManager/edit_product/' . $last_id);
+        }
+
         //remove of realted products
 
         $this->load->view('productManager/editProducts', $data);

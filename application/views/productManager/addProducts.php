@@ -81,7 +81,11 @@ $this->load->view('layout/topmenu');
                     </div>
                     <!--end of price-->
 
-
+                    <!--end of price-->
+                    <div class="form-group">
+                        <label >Variant Value</label>
+                        <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->variant_value; ?>">
+                    </div>
 
                     <!--pictures-->
                     <div class="row">
@@ -183,27 +187,27 @@ $this->load->view('layout/topmenu');
 $this->load->view('layout/footer');
 ?> 
 <script>
-                            $(function () {
-                                $(".price_tag_text").keyup(function () {
-                                    var rprice = Number($("#regular_price").val());
-                                    var sprice = Number($("#sale_price").val());
-                                    console.log(sprice, rprice)
-                                    if (sprice) {
-                                        if (rprice > sprice) {
-                                            $("#finalprice").text(sprice);
-                                            $("#finalprice1").val(sprice);
-                                        } else {
-                                            $("#finalprice").text(rprice);
-                                            $("#finalprice1").val(rprice);
-                                            $("#sale_price").val(0)
-                                        }
-                                    } else {
-                                        $("#finalprice").text(rprice);
-                                        $("#finalprice1").val(rprice);
-                                        $("#sale_price").val(0)
-                                    }
-                                })
-                            });
+    $(function () {
+        $(".price_tag_text").keyup(function () {
+            var rprice = Number($("#regular_price").val());
+            var sprice = Number($("#sale_price").val());
+            console.log(sprice, rprice)
+            if (sprice) {
+                if (rprice > sprice) {
+                    $("#finalprice").text(sprice);
+                    $("#finalprice1").val(sprice);
+                } else {
+                    $("#finalprice").text(rprice);
+                    $("#finalprice1").val(rprice);
+                    $("#sale_price").val(0)
+                }
+            } else {
+                $("#finalprice").text(rprice);
+                $("#finalprice1").val(rprice);
+                $("#sale_price").val(0)
+            }
+        })
+    });
 
 </script>
 

@@ -20,7 +20,7 @@ $this->load->view('layout/topmenu');
 <!-- Main content -->
 <section class="content" ng-controller="productController">
     <div class="well well-sm">
-                <a class="btn btn-success btn-lg" href="<?php echo site_url('ProductManager/add_product')?>">Add New Product</a>
+        <a class="btn btn-success btn-lg" href="<?php echo site_url('ProductManager/add_product') ?>">Add New Product</a>
 
     </div>
     <div class="">
@@ -80,8 +80,24 @@ $this->load->view('layout/topmenu');
 
 
                     </div>
-                    <!--end of price-->
+                    <?php
+                    if ($product_obj->variant_product_of) {
+                        ?>
+                        <!--end of price-->
+                        <div class="form-group">
+                            <label >Variant Value</label>
+                            <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->variant_value; ?>">
+                        </div>
+                        <?php
+                    }
+                    ?>
 
+                
+                        <div class="form-group">
+                            <label >Variant Value: <?php echo $product_obj->variant_value; ?></label>
+                            <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->variant_value; ?>">
+                        </div>
+                  
 
 
                     <!--pictures-->
@@ -189,9 +205,9 @@ $this->load->view('layout/topmenu');
                         </div>
                     </div>
                     <div class="form-group">
-                            <label >External Link</label>
-                            <input type="text" class="form-control" name="video_link"  aria-describedby="emailHelp" placeholder="" required="" value="<?php echo $product_obj->video_link; ?>">
-                        </div>
+                        <label >External Link</label>
+                        <input type="text" class="form-control" name="video_link"  aria-describedby="emailHelp" placeholder="" required="" value="<?php echo $product_obj->video_link; ?>">
+                    </div>
 
 
 
@@ -216,9 +232,79 @@ $this->load->view('layout/topmenu');
                     ?>
                 </form>
             </div>
+
+        </div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h3 class="panel-title">Product Variants
+                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target=".add_variant_model" style="margin-left: 21px;">Add Variant</button>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class='col-md-12'>
+                    <table class='table'>
+                        <?php
+                        if ($vrproductobj) {
+
+                            foreach ($vrproductobj as $key => $value) {
+                                ?>
+                                <tr>
+                                    <td>
+                                        <div class="product_image product_image_back" style="background: url(<?php echo (base_url() . "assets/product_images/" . $value["file_name1"]); ?>)" style='height: 100px'>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <?php echo $value['variant_value']; ?>
+                                    </td>
+                                    <td>
+                                        <a class='btn btn-danger' href='<?php echo site_url("ProductManager/edit_product/" . $value['id']); ?>'>Edit</a>
+                                    </td>
+                                </tr>
+
+                                <?php
+                            }
+                        }
+                        ?>
+                    </table>
+
+                </div>
+            </div>
+
         </div>
 
 
+    </div>
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade add_variant_model" id="add_variant_model">
+        <div class="modal-dialog" role="document">
+            <form action="#" method="post" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Add Variant</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--end of price-->
+
+                        <div class="form-group">
+                            <label >Variant Value</label>
+                            <input type="hidden" class="form-control" name="product_id"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->id; ?>">
+
+                            <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="" required="">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default" value='addvariant'  name='addvariant' >Add Now</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -277,6 +363,8 @@ $this->load->view('layout/footer');
                                         $("#sale_price").val(0)
                                     }
                                 })
+
+
                             });
 
 </script>
