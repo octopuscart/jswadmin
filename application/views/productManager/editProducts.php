@@ -44,11 +44,16 @@ $this->load->view('layout/topmenu');
                     <div class="form-group">
                         <label >Category         </label><br/>
                         <span class='categorystring'>{{selectedCategory.category_string}}</span>
-                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".categoryopen" style="margin-left: 21px;">Select Category</button>
-
                         <input type="hidden" name="category_name" id="category_id" value="<?php echo $product_obj->category_id; ?>">
 
+                        <?php if (!$product_obj->variant_product_of) { ?>
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".categoryopen" style="margin-left: 21px;">Select Category</button>
+
+                            <?php
+                        }
+                        ?>
                     </div>
+
                     <div class="form-group">
                         <label for="exampleInputPassword1">Description</label>
                         <textarea class="form-control"  name="description" style="height:100px"><?php echo $product_obj->description; ?></textarea>
@@ -80,13 +85,48 @@ $this->load->view('layout/topmenu');
 
 
                     </div>
-     
-                
-                        <div class="form-group">
-                            <label >Variant Value: <?php echo $product_obj->variant_value; ?></label>
-                            <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->variant_value; ?>">
+                    <div class='well well-sm row'>
+                        <div class='col-md-3'>
+
+                            <div class="form-group">
+                                <label >SKU</label>
+                                <input type="text" class="form-control" name="sku"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->sku; ?>">
+                            </div>
                         </div>
-                  
+                        <div class='col-md-3'>
+                            <div class = "form-group form-inline">
+                                <label >Product has variant?</label><br/>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="has_variant" id="has_variant1" value="Yes" checked>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="has_variant" id="has_variant" value="No">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class = "form-group">
+                                <label >Variant Type
+                                </label>
+                                <input type="text" class="form-control" name="variant_type"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->variant_type; ?>">
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class = "form-group">
+                                <label >Variant Value: <?php echo $product_obj->variant_value; ?>
+                                </label>
+                                <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->variant_value; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
 
 
                     <!--pictures-->
@@ -223,43 +263,60 @@ $this->load->view('layout/topmenu');
             </div>
 
         </div>
-        <div class="panel panel-inverse">
-            <div class="panel-heading">
-                <h3 class="panel-title">Product Variants
-                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target=".add_variant_model" style="margin-left: 21px;">Add Variant</button>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class='col-md-12'>
-                    <table class='table'>
-                        <?php
-                        if ($vrproductobj) {
-
-                            foreach ($vrproductobj as $key => $value) {
-                                ?>
-                                <tr>
-                                    <td>
-                                        <div class="product_image product_image_back" style="background: url(<?php echo (base_url() . "assets/product_images/" . $value["file_name1"]); ?>)" style='height: 100px'>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <?php echo $value['variant_value']; ?>
-                                    </td>
-                                    <td>
-                                        <a class='btn btn-danger' href='<?php echo site_url("ProductManager/edit_product/" . $value['id']); ?>'>Edit</a>
-                                    </td>
-                                </tr>
-
-                                <?php
-                            }
-                        }
-                        ?>
-                    </table>
-
+        <?php
+        if ($product_obj->variant_product_of) {
+            
+        } else {
+            ?>
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Product Variants
+                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target=".add_variant_model" style="margin-left: 21px;">Add Variant</button>
+                    </h3>
                 </div>
-            </div>
+                <div class="panel-body">
+                    <div class='col-md-12' style="font-size:15px">
+                        <table class='table'>
+                            <tr>
+                                <th>Image</th>
+                                <th>SKU</th>
+                                <th><?php echo $product_obj->variant_type;?></th>
+                                <th></th>
+                            </tr>
+                            <?php
+                            if ($vrproductobj) {
 
-        </div>
+                                foreach ($vrproductobj as $key => $value) {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="product_image product_image_back" style="background: url(<?php echo (base_url() . "assets/product_images/" . $value["file_name"]); ?>);height: 50px!important">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <?php echo $value['sku']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $value['variant_value']; ?>
+                                        </td>
+                                        <td>
+                                            <a class='btn btn-danger' href='<?php echo site_url("ProductManager/edit_product/" . $value['id']); ?>'>Edit</a>
+                                        </td>
+                                    </tr>
+
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+            <?php
+        }
+        ?>
 
 
     </div>

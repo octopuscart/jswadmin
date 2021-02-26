@@ -501,6 +501,8 @@ class ProductManager extends CI_Controller {
                 'offer' => $this->input->post('offer'),
                 'video_link' => $this->input->post('video_link'),
                 'variant_value' => $this->input->post("variant_value"),
+                'variant_type' => $this->input->post("variant_type"),
+                'has_variant' => $this->input->post("has_variant"),
                 'status' => 1,
                 'stock_status' => $this->input->post('stock_status')
             );
@@ -548,7 +550,9 @@ class ProductManager extends CI_Controller {
             $query = $this->db->get('products');
             $productobj = $query->row_array();
             unset($productobj["id"]);
-            $productobj["variant_value"] = $variant_value;
+            $productobj["variant_type"] = $productobj['variant_type'];
+            $productobj["variant_value"] =  $variant_value;
+            $productobj["variant_product_of"] =  $product_id;;
             $this->db->insert('products', $productobj);
             $last_id = $this->db->insert_id();
             if (autosku) {
