@@ -119,8 +119,8 @@ class Api extends REST_Controller {
             'total_price' => $this->post('total'),
             'payment_mode' => $this->post('payment_method'),
             'status' => "Processing",
-            'user_id' => $this->post('user_id') ? $this->post('user_id') :'Guest',
-            'order_key' => $this->post('user_id') ? $this->post('user_id') :'Guest',
+            'user_id' => $this->post('user_id') ? $this->post('user_id') : 'Guest',
+            'order_key' => $this->post('user_id') ? $this->post('user_id') : 'Guest',
         );
         $this->db->insert('user_order', $web_order);
 
@@ -139,7 +139,7 @@ class Api extends REST_Controller {
             'c_time' => date('H:i:s'),
             'order_id' => $last_id,
             'status' => "Order Confirmed",
-            'user_id' => $this->post('user_id') ? $this->post('user_id') :'Guest',
+            'user_id' => $this->post('user_id') ? $this->post('user_id') : 'Guest',
             'remark' => "Order Confirmed By Using COD,  Waiting For Payment",
         );
         $this->db->insert('user_order_status', $order_status_data);
@@ -294,7 +294,7 @@ class Api extends REST_Controller {
 
     function category_get() {
         $cats = [65, 67, 69, 70, 71, 73];
-        $cats = [1,2,3,4,5,6,7,8];
+        $cats = [1, 2, 3, 4, 5, 6, 7, 8];
         $this->config->load('rest', TRUE);
         $this->db->where("parent_id=0");
         $query = $this->db->get("category");
@@ -362,6 +362,7 @@ class Api extends REST_Controller {
         }
         array_push($categorylist, $categoryid);
         $this->db->where_in("category_id", $categorylist);
+        $this->db->order_by("id desc");
         $this->db->where("status", '1');
 //        $this->db->where_in("stock_status", 'In Stock');
         $query = $this->db->get("products");
