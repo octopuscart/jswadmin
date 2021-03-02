@@ -81,11 +81,47 @@ $this->load->view('layout/topmenu');
                     </div>
                     <!--end of price-->
 
-                    <!--end of price-->
-                    <div class="form-group">
-                        <label >Variant Value</label>
-                        <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->variant_value; ?>">
+                   <div class='well well-sm row'>
+                        <div class='col-md-3'>
+
+                            <div class="form-group">
+                                <label >SKU</label>
+                                <input type="text" class="form-control" name="sku"  aria-describedby="emailHelp" placeholder="" value="">
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class = "form-group form-inline">
+                                <label >Product has variant?</label><br/>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="has_variant" id="has_variant1" value="Yes" checked>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="has_variant" id="has_variant" value="No">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class = "form-group">
+                                <label >Variant Type
+                                </label>
+                                <input type="text" class="form-control" name="variant_type"  aria-describedby="emailHelp" placeholder="" value="">
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class = "form-group">
+                                <label >Variant Value: 
+                                </label>
+                                <input type="text" class="form-control" name="variant_value"  aria-describedby="emailHelp" placeholder="" value="">
+                            </div>
+                        </div>
                     </div>
+                    <br/>
 
                     <!--pictures-->
                     <div class="row">
